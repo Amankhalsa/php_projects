@@ -1,0 +1,72 @@
+    <? $lang = secureEncode($_GET['id']);?>
+      <div class="content-wrapper">
+    <script>aurl = 'lang';</script>   
+        <section class="content">
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Gender/Niche - Language: <?= getCurrentLang($lang); ?></h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <div class="row">
+                    <?= getAdminLangEditGender($lang); ?>              
+                  </div> 
+                </div> 
+
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Custom profile questions - Language: <?= getCurrentLang($lang); ?></h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <div class="row">
+                    <?= getAdminLangEditQuestions($lang); ?>              
+                  </div> 
+                </div> 
+
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Custom profile answers - Language: <?= getCurrentLang($lang); ?></h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <div class="row">
+                    <?= getAdminLangEditAnswers($lang); ?>              
+                  </div> 
+                </div> 
+
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Belloo mobile app / mobile site - Language: <?= getCurrentLang($lang); ?></h3>
+                </div><!-- /.box-header -->
+                  <div class="box-body">
+            <div class="row">
+            <?= getAdminLangEditApp($lang); ?>              
+          </div>
+                  </div>
+              </div><!-- /.box -->
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Belloo - Language: <?= getCurrentLang($lang); ?> </h3>
+                </div><!-- /.box-header -->
+                  <div class="box-body">
+            <div class="row">       
+            <?= getAdminLangEdit($lang); ?>
+          </div>
+                  </div>
+              </div><!-- /.box -->          
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Email - Language: <?= getCurrentLang($lang); ?></h3>
+                </div><!-- /.box-header -->
+                  <div class="box-body">
+            <div class="row">       
+            <?= getAdminLangEditEmail($lang); ?>
+          </div>
+                  </div>
+              </div><!-- /.box -->        
+      </div>    
+    </div>  
+  </section>
+</div>  
+    </div>

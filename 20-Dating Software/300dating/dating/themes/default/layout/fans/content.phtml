@@ -1,0 +1,91 @@
+			<script>
+			url = "fans";
+			</script>       
+			<?php $fans = totalFans($sm['user']['id']); ?>     
+			<div class="col s8 real fix-width-content" id="site-content">             
+                <div class="profile-menu ">
+                    <ul>
+                        <li class="selected" >
+                            <?= $sm['lang'][101]['text']; ?>
+                        </li>                                     
+                    </ul>
+                </div>
+				
+                <div class="wall" style="min-height: 550px" >                
+					<?php 
+						if($sm['user']['premium'] == 0 && $fans > 0 && $sm['basic']['fans'] == 0){ ?>			
+						<div class="banner-container banner-container--wide js-banner-slot js-horizontal-banner-slot">
+						    <div class="banner banner--lgrey js-banner-wrap">
+						        <div class="banner-content">
+						            <div>
+						                <div class="x-large"></div> <b><?= $fans; ?></b><?= $sm['lang'][450]['text']; ?>.</div>
+						        </div>
+						        <div class="banner-buttons">
+						            <div>
+						                <div class="btn btn--sm btn--blue" onCLick="goTo('premium');"> <span class="btn-txt"><?= $sm['lang'][448]['text']; ?></span> <span class="b-link js-fans-action" ></span> </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>	
+
+					<div class="section-empty__content">
+					    <div class="promo">
+					        <div class="promo__content promo__content--low">
+					            <div class="promo__media">
+					                <div class="brick-group brick-group--promo">
+					                    <div class="brick brick--xlg disabled">
+					                        <div class="brick-img profile-photo" data-src="<?= randomPhotoUser($sm['user']['s_gender']); ?>"></div>
+					                    </div>
+					                    <div class="brick brick--xlg brick--xxxlg brick--stroke disabled">
+					                        <div class="brick-img profile-photo" data-src="<?= $sm['user']['profile_photo']; ?>"></div>
+					                        <div class="brick brick--sm brick--spp brick--bc"><img src="<?= $sm['config']['theme_url']; ?>/images/vip_y.png" /></div>
+					                    </div>
+					                    <div class="brick brick--xlg disabled">
+					                        <div class="brick-img profile-photo" data-src="<?= randomPhotoUser($sm['user']['s_gender']); ?>"></div>
+					                    </div>
+					                </div>
+					            </div>
+					            <p class="large"><?= $sm['lang'][451]['text']; ?><?= $sm['config']['name']; ?>.</p>
+					            <div class="btn btn--spp" onClick="goTo('premium');"> <span class="btn-txt"><?= $sm['lang'][452]['text']; ?>!</span> </div>
+					        </div>
+					        <!--control type: tnc-->
+					        <div class="promo__hint js-wrap js-service-cost js-control js-core-events-container hidden">
+					            <div class="service-cost">
+					                <p class="service-cost__text"> </p>
+					            </div>
+					        </div>
+					    </div>
+					</div>						
+
+					<?
+					} else { 	
+						echo userFans(1);
+					} ?>  	
+
+
+
+
+				  <div class="footer-badoo" style="margin-top:55px;left:-4.15%;width:104%">
+					<center>
+					<div class="ad-zone">
+						<?php echo siteConfig('ads'); ?>
+					</div>
+					<div class="download-apps">
+						<h3><?= $sm['lang'][434]['text']; ?>:</h3>
+						<a href="<?php echo $app_ios; ?>">
+							<img src="<?php echo $sm['config']['theme_url']; ?>/images/ios.png" />
+							<h2><?= $sm['lang'][435]['text']; ?></h2>
+						</a>
+						<a href="<?php echo $app_android; ?>">
+							<img src="<?php echo $sm['config']['theme_url']; ?>/images/android.png" /><h2><?= $sm['lang'][436]['text']; ?></h2>
+						</a>
+					</div>
+					<div class="bottom-left">
+						<a href="<?php echo $sm['config']['site_url']; ?>/terms"><h3><?= $sm['lang'][437]['text']; ?></h3></a> <a href="<?php echo $sm['config']['site_url']; ?>/privacy"><h3><?= $sm['lang'][63]['text']; ?></h3></a> <a href="mailto:<?php echo $sm['config']['email']; ?>"><h3><?= $sm['lang'][64]['text']; ?></h3></a> <h3>  <?php echo $sm['config']['name']; ?> 2017 </h3>
+					</div>			
+				</center>
+				  </div>
+                </div>
+
+        
+            </div> 

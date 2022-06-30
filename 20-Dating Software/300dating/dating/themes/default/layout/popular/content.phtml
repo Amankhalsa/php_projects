@@ -1,0 +1,77 @@
+			<script>
+
+			url = "popular";
+
+			</script>            
+
+			<div class="col s8 real fix-width-content" id="site-content">              
+
+                <div class="profile-menu ">
+
+                    <ul>
+
+                        <li class="selected" >
+
+                            <?= $sm['lang'][116]['text']; ?>
+
+                        </li>                                     
+
+                    </ul>
+
+                </div>
+
+				
+
+                <div class="wall" > 
+
+			<?= popularUsers(); ?>
+
+					
+
+				  <div class="footer-badoo" style="margin-top:25px;left:-4.15%;width:104%">
+
+				<center>
+
+					<div class="ad-zone">
+
+						<?php echo siteConfig('ads'); ?>
+
+					</div>
+
+					<div class="download-apps">
+
+						<h3><?= $sm['lang'][434]['text']; ?>:</h3>
+
+						<a href="<?php echo $app_ios; ?>">
+
+							<img src="<?php echo $sm['config']['theme_url']; ?>/images/ios.png" />
+
+							<h2><?= $sm['lang'][435]['text']; ?></h2>
+
+						</a>
+
+						<a href="<?php echo $app_android; ?>">
+
+							<img src="<?php echo $sm['config']['theme_url']; ?>/images/android.png" /><h2><?= $sm['lang'][436]['text']; ?></h2>
+
+						</a>
+
+					</div>
+
+					<div class="bottom-left">
+
+						<a href="<?php echo $sm['config']['site_url']; ?>/terms"><h3><?= $sm['lang'][437]['text']; ?></h3></a> <a href="<?php echo $sm['config']['site_url']; ?>/privacy"><h3><?= $sm['lang'][63]['text']; ?></h3></a> <a href="mailto:<?php echo $sm['config']['email']; ?>"><h3><?= $sm['lang'][64]['text']; ?></h3></a> <h3>  <?php echo $sm['config']['name']; ?> 2017 </h3>
+
+					</div>			
+
+				</center>
+
+				  </div>					
+
+                </div>
+
+
+
+        
+
+            </div> 

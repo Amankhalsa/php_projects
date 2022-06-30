@@ -1,0 +1,1 @@
+[28-Aug-2017 18:52:21 UTC] PHP Fatal error:  Call to undefined function siteConfig() in /home/belloo/public_html/themes/default/layout/discover/content.phtml on line 39

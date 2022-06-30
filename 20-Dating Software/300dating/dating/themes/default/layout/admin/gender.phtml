@@ -1,0 +1,118 @@
+<?php
+global $mysqli;
+if(isset($_GET['u'])){
+  $id = secureEncode($_GET['u']);
+  $name = secureEncode($_GET['name']);
+  $sex = secureEncode($_GET['sex']);
+  $mysqli->query("UPDATE config_genders set name = '".$name."',sex = '".$sex."' where id = '".$id."'");
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=gender');
+}
+if(isset($_GET['a'])){
+  $id = secureEncode($_GET['a']);
+  $name = secureEncode($_GET['name']);
+  $sex = secureEncode($_GET['sex']);
+  $query = $mysqli->query("SELECT * FROM languages order by id ASC");
+  if ($query->num_rows > 0) { 
+    while($re = $query->fetch_object()){  
+        $mysqli->query("INSERT INTO config_genders (id,name,lang_id,sex) 
+          VALUES ('".$id."','".$name."','".$re->id."','".$sex."')");
+    }
+  }
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=gender');
+}
+if(isset($_GET['d'])){
+  $id = secureEncode($_GET['d']);
+  $mysqli->query("DELETE FROM config_genders where id = '".$id."'");
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=gender');
+}
+?>
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Gender settings
+          </h1>
+        </section>
+    <script>aurl = 'gender';</script>
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+>            
+            <div class="col-md-9">
+              <!-- general form elements -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Site Genders Settings</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" action="#" id="gender-settings">
+                  <input type="hidden" value="gender" name="action" />        
+                  <div class="box-body">
+                  <table style="width: 100%;text-align: left;"><tr style="width: 100%;margin-bottom: 20px">
+                  <td style="display: inline-table;width: 20%"> ID</td>
+                  <td style="display: inline-table;width: 35%"> Name/value<br> Will be displayed in the site</td>
+                  <td style="display: inline-table;width: 30%"> Sex<br>For fake Users creation</td></tr>
+                  </table>                                       
+                <?php
+                  $all = end($sm['genders']);
+                  $all = $all['id'] + 1;                  
+                  foreach($sm['genders'] as $entry){ $sex = getGenderSex($entry['id']); $name = $entry['text']; ?>
+                      <div class="form-group">
+                             <input class="form-control" disabled style="display: inline-table;width: 20%" value="<?= $entry['id'];?>" name="site_gender_id" />                        
+                             <input class="form-control" id="genderName<?= $entry['id'];?>" style="display: inline-table;width: 35%" value="<?= $entry['text'];?>" name="site_gender_name" />
+                              <select class="form-control" id="genderSex<?= $entry['id'];?>" name="site_gender_sex" style="display: inline-table;width: 20%">
+                                <?php if($sex == 1){
+                                  echo '<option value="1"  selected>Male</option>';
+                                  echo '<option value="2">Female</option>';
+                                } else {
+                                  echo '<option value="2" selected>Female</option>';
+                                   echo '<option value="1">Male</option>';
+                                } ?>
+                              </select> 
+                              <div style="display: inline-table;width: 20%">
+                              <a href="#" onClick="uGender(<?= $entry['id'];?>)" class="btn btn-success" style="display: inline-table;margin-right: 3px"><i class="fa fa-check"></i></a>                                
+                              <a href="#" onClick="dGender(<?= $entry['id'];?>)" class="btn btn-danger" style="display: inline-table;"><i class="fa fa-close"></i></a>
+                              </div>                            
+                      </div>
+                  <?php } ?>  
+                     <div class="form-group">
+                             <input class="form-control" style="display: inline-table;width: 20%" value="<?= $all;?>" disabled name="site_gender_id" />                        
+                             <input class="form-control" id="genderName" style="display: inline-table;width: 35%" value="" name="site_gender_name" />
+                              <select class="form-control" id="genderSex" name="site_gender_sex" style="display: inline-table;width: 20%">
+                                  <option value="1">Male</option>
+                                  <option value="2">Female</option>
+                              </select> 
+                              <div style="display: inline-table;width: 20%">
+                              <a href="#" id="addGender" class="btn btn-success" style="display: inline-table;margin-right: 3px"><i class="fa fa-plus"></i></a>                                                                
+                              </div>                            
+                      </div>                        
+                  </div><!-- /.box-body -->
+                </form>
+              </div><!-- /.box -->
+      </div> 
+
+    </div> 
+
+        <div class="callout" style="background:#ddd;margin:15px;">
+        <h4 style="padding: 25px;" class="warning">Everytime you update/add or remove a gender/niche it will be updated in all the languages of the software,<br>however you can go to the 
+        <a href="index.php?page=admin&p=lang">language system</a> and edit it for each language</h4>
+        </div>        
+  </section>
+</div>  
+<script>
+document.getElementById("addGender").addEventListener("click", addGender);
+function addGender(){
+  var id = <?= $all; ?>;
+  var name = $('#genderName').val();
+  var sex = $('#genderSex').val();
+  window.location.href = 'index.php?page=admin&p=gender&a='+id+'&name='+name+'&sex='+sex;
+}
+function uGender(id){
+  var name = $('#genderName'+id).val();
+  var sex = $('#genderSex'+id).val();  
+  window.location.href = 'index.php?page=admin&p=gender&u='+id+'&name='+name+'&sex='+sex;
+}
+function dGender(id){
+  window.location.href = 'index.php?page=admin&p=gender&d='+id;
+}
+</script>

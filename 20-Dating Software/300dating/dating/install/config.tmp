@@ -1,0 +1,15 @@
+<?php
+
+$db_host = '%1';
+$db_name = '%2';
+$db_username = '%3';
+$db_password = '%4';
+$site_url = '%5';
+
+
+//SOCIAL AND APPS SETTINGS
+$site_facebook = '';
+$site_google = '';
+$site_twitter = '';
+$app_android = '';
+$app_ios = '';

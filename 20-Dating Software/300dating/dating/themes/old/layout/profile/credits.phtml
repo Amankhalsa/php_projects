@@ -1,0 +1,155 @@
+			<script>
+
+			url = "credits";
+
+			</script>            
+
+            <div class="col s8 real fix-width-content" id="site-content" >              
+
+                <div class="wall" style="height:100%;width: 100%;"> 
+
+                    <div class="payment-promo__head payment-promo__head--spp" style="background: #25BA25;left:-7%;width:107%">
+
+                        <div class="brick brick--xlg brick--stroke">
+
+                            <div class="brick-img profile-photo" data-src="<?= $sm['user']['profile_photo']; ?>" ></div>
+
+                            <mark class="brick brick--sm" style="background: #fff"><img src="<?= $sm['config']['theme_url']; ?>/images/coin.png" /> </mark>
+
+                        </div>
+
+                    </div>                
+
+                    <div class="payment-promo" style="margin-top: 50px;">
+
+                        <div class="payment-promo__content" >
+
+                            <h2 class="comforta" style="font-size: 24px;"><?= $sm['lang'][476]['text']; ?><?= $sm['config']['name'];?><?= $sm['lang'][73]['text']; ?></h2>
+
+                            <ul class="payment-info" >
+
+                                <li class="payment-info__item" >
+
+                                    <div class="payment-info__ico payment-info__ico--bottom">
+
+                                        <div class="payment-info__photo profile-photo" data-src="<?= randomPhoto($sm['user']['id']); ?>"></div>
+
+
+
+                                    <?php
+
+                                    $time = time();
+
+                                    if($sm['user']['last_access'] > $time && $sm['user']['meet'] == 1){ 
+
+                                        echo '<div class="btn btn--sm btn--riseup" style="margin-top: 60px;">
+
+                                     <span class="btn-txt"><img src="'.$sm['config']['theme_url'].'/images/check.png" width="25px"></span>
+
+                                    </div>';
+
+                                    } else {
+
+                                        echo '<div class="btn btn--sm btn--riseup" onclick="showRiseUp();" style="margin-top: 60px;">
+
+                                     <span class="btn-txt">'.$sm['lang'][416]['text'].'</span>
+
+                                    </div>';
+
+                                    } ?>
+
+
+
+                                    <span class="payment-info__hint"><?= $sm['lang'][477]['text']; ?>.
+
+                                    </span>
+
+                                </li>
+
+                                <li class="payment-info__item">
+
+                                    <div class="payment-info__ico payment-info__ico--top">
+
+                                        <div class="payment-info__photo profile-photo" data-src="<?= randomPhoto($sm['user']['id']); ?>"></div>
+
+                                    <?php
+
+                                    $time = time();
+
+                                    if($sm['user']['last_access'] > $time && $sm['user']['discover'] > 0){ 
+
+                                        echo '<div class="btn btn--sm btn--encounters" style="margin-top: 60px;">
+
+                                     <span class="btn-txt"><img src="'.$sm['config']['theme_url'].'/images/check.png" width="25px"></span>
+
+                                    </div>';
+
+                                    } else {
+
+                                        echo '<div class="btn btn--sm btn--encounters" onclick="showDiscover()" style="margin-top: 60px;">
+
+                                     <span class="btn-txt">'.$sm['lang'][498]['text'].'</span>
+
+                                    </div>';
+
+                                    } ?>                                        
+
+                                     <span class="payment-info__hint"><?= $sm['lang'][478]['text']; ?>.</span>
+
+                                </li>
+
+                                <li class="payment-info__item">
+
+                                    <div class="payment-info__ico">
+
+                                        <div class="payment-info__photo profile-photo" data-src="<?= randomPhoto($sm['user']['id']); ?>"></div>
+
+                                        <div class="btn btn--sm btn--spotlight" onclick="showSpotlight()"  style="margin-top: 30px;"> <span class="btn-txt"><?= $sm['lang'][431]['text']; ?></span>
+
+                                        <span class="b-link js-add-to-spotlight"></span> </div>
+
+                                        <span class="payment-info__hint"> <?= $sm['user']['first_name']; ?><?= $sm['lang'][479]['text']; ?><?= $sm['user']['city']; ?> </span>
+
+                                </li>
+
+                            </ul>
+
+                            <div class="payment-features" style="margin-top: 200px;">
+
+                                <div class="payment-feature">
+
+                                    <div class="payment-feature__ico"><img src="<?php echo $sm['config']['theme_url']; ?>/images/stickers.png"></div>
+
+                                    <span class="link"><?= $sm['lang'][480]['text']; ?><b><?= $sm['config']['name'];?></b></span>
+
+                                </div>
+
+                                <div class="payment-feature">
+
+                                    <div class="payment-feature__ico"><img src="<?php echo $sm['config']['theme_url']; ?>/images/gifts.png"></div>
+
+                                    <span class="link"><?= $sm['lang'][481]['text']; ?><b><?= $sm['lang'][482]['text']; ?></b> </span>
+
+                                </div>   
+
+                                <div class="payment-feature">
+
+                                    <div class="payment-feature__ico"><img src="<?php echo $sm['config']['theme_url']; ?>/images/showyou.png"></div>
+
+                                    <span class="link"><?= $sm['lang'][483]['text']; ?></span>
+
+                                </div>                                                                
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+        
+
+            </div> 

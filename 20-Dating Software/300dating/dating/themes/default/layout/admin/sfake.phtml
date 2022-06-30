@@ -1,0 +1,144 @@
+    <?php 
+    $c = array();
+    $countries = 'Angola,Argentina,Armenia,Australia,Austria,Belgium,Bolivia,Brazil,Bulgaria,Cameroon,Canada,Chile,China,Colombia,Congo kinshasa,Costa rica,Croatia,Cuba,Denmark,Dominican republic,Ecuador,Egypt,El salvador,Finland,France,Georgia,Germany,Ghana,Greece,Guatemala,Haiti,Honduras,Hong kong,India,Indonesia,Iran,Iraq,Ireland,Israel,Jamaica,Japan,Jordan,Kazakhstan,Kenya,Lithuania,Luxembourg,Malaysia,Mexico,Morocco,Netherlands,New zealand,Nicaragua,Nigeria,Norway,Panama,Paraguay,Peru,Philippines,Portugal,Puerto rico,Romania,Senegal,Serbia,Singapore,Slovakia,Slovenia,South africa,South korea,Spain,Sweden,Switzerland,Taiwan,Tanzania,Thailand,Trinidad and tobago,Turkey,Uganda,Ukraine,United arab emirates,United kingdom,United states,Uruguay,Venezuela,Vietnam';
+    $arr = explode(',', $countries); ?>  
+    <div class="content-wrapper">
+        <section class="content">
+        <div class="row">
+        <div class="callout callout-success" style="margin:15px;">
+        <h4 style="padding: 25px;" class="warning">Everytime any real user search for people, the system automatic generate the fake users for that location,<br>so  your real users always will see diferent people online</h4>
+        </div>
+        <div class="col-md-6">
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Fake user settings</h3>
+                  <p style="color:#999"></p>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+               <form action="#" id="fakeu-settings">
+                <input type="hidden" value="fakeu" name="action" />               
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Fake users generator</label>
+                      <p style="color:#999">We have a database with 10.000.000 users from all the world - <a href="https://premiumdatingscript.com/">Dating</a></p>
+                      <select  class="form-control" name="fakeu_api" >
+                        <option value="<?= siteConfig('fapi'); ?>"><?= siteConfig('fapi'); ?></option>
+                        <?php if(siteConfig('fapi') == 'Yes'){
+                          echo '<option value="No">No</option>';
+                        } else {
+                          echo '<option value="Yes">Yes</option>';
+                        } ?>
+                      </select>
+                    </div>                    
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Ethnicity reference - Country based</label>
+                      <p style="color:#999">Generate fake users from this country (as Ethnicity reference)</p>
+                      <select  class="form-control" name="fakeu_country" >
+                      <option value="<?= siteConfig('fcountry'); ?>"><?= siteConfig('fcountry'); ?></option>
+                      <?php
+                      foreach ($arr as $country) {
+                        echo'<option value="'.$country.'">'.$country.'</option>';
+                      } ?>
+                      </select>
+                    </div>  
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Fake user artificial inteligence</label>
+                      <p style="color:#999">Use the artificial inteligence for reply to the real users, the artificial inteligence support all the languages</p>                   
+                      <select  class="form-control" name="fakeu_ai" >
+                        <option value="<?= siteConfig('fAI'); ?>"><?= siteConfig('fAI'); ?></option>
+                        <?php if(siteConfig('fAI') == 'Yes'){
+                          echo '<option value="No">No</option>';
+                        } else {
+                          echo '<option value="Yes">Yes</option>';
+                        } ?>
+                      </select>
+                      <h5>For use this feature you need to create a cron job to this url:<br><br>
+                      <b><?= $sm['config']['site_url']; ?>requests/ai.php</b></h5><br>
+                      <p>
+                      Go to the <a href="https://www.premiumdatingscript.com/documentation" target="_blank">documentation center</a> if you dont know how to create a CRON JOB</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Fake User Inteligence Chance to respond in %</label>
+                      <p style="color:#999">It would be suspicious if all the girls who we write to, write to us back, with this function we can play a little with the normal chances that they will not respond to a message</p>
+                      <input type="number" step="10" min="0" max="100" class="form-control" value="<?= siteConfig('fAiChance'); ?>" name="fakeu_respond" />
+                    </div>                                                          
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Chance to visit back in %</label>
+                      <p style="color:#999">If the fake user is online chance to visit back after visit<br>The fake user will take from 15 to 90 seconds to visit back for avoid suspicius</p>
+                      <input type="number" step="10" min="0" max="100" class="form-control" value="<?= siteConfig('visit_back'); ?>" name="fakeu_visit" />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Chance to like back in %</label>
+                      <p style="color:#999">If the fake user is online chance to give like after visit, requires to trigger the visit for trigger the like<br>The fake user will take from 5 to 15 seconds to give like for avoid suspicius</p>
+                      <input type="number" step="10" min="0" max="100" class="form-control" value="<?= siteConfig('like_back'); ?>" name="fakeu_like" />
+                    </div>                            
+                  </div><!-- /.box-body -->
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" >Update fake user settings</button>            
+                  </div>
+                </form>
+              </div><!-- /.box -->
+              </div>
+            <div class="col-md-6">
+               <div class="box box-danger">
+                  <div class="box-header">
+                    <h3 class="box-title"><b style="color:#ff2233">IMPORTANT!</b><br>Artificial Inteligence API Key</h3>
+            <p style="color:#999">This key is necesary for activate the fake user Artificial inteligence responses</p>          
+                  </div><!-- /.box-header -->
+                  <!-- form start -->
+                  <form role="form" action="#" id="ai-settings">
+          <input type="hidden" value="aikey" name="action" />
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Artificial Inteligence API Key</label>
+                            <input type="text" class="form-control" value="<?= siteConfig('fapiKey'); ?>" name="fakeu_aiapikey" />  
+                      </div>                  
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                      <button type="submit" class="btn btn-primary" >Add AI KEY</button>
+          <a href="http://premiumdatingscript.com/documentation" target="_blank" class="btn btn-info">Tutorial AI Key</a>
+                    </div>
+                  </form>
+                </div><!-- /.box -->                  
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Fake users engagement to offline users </h3>
+                  <p style="color:#999">The fake users need to be "working" even when the real users is not connected in the site, with this engagement system your fake users will randomly like or match real users.<br>The engagement system will send an email informing about a new match or a like by someone inside their search criteria for make it more attractive to click and come back to the site<br><b>This features requires <a href="index.php?page=admin&p=website" target="_blank">SMTP</a> email service correctly configurated</b></p>
+                </div> 
+                <div class="box-body"> 
+               <form action="#" id="engage-settings">
+                <input type="hidden" value="engage" name="action" />   
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Engagement feature enabled?</label>
+                        <select  class="form-control" name="engage" >
+                          <option value="<?= siteConfig('fEngage'); ?>"><?= siteConfig('fEngage'); ?></option>
+                          <?php if(siteConfig('fEngage') == 'Yes'){
+                            echo '<option value="No">No</option>';
+                          } else {
+                            echo '<option value="Yes">Yes</option>';
+                          } ?>
+                        </select>
+                      <h5>For use this feature you need to create a cron job to this url:<br><br>
+                      <b><?= $sm['config']['site_url']; ?>requests/engage.php</b></h5><br>                     
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Limit users per call</label>
+                      <p style="color:#999">The users are selected randomly you can configure the limit of how much users the engagement will send email noticication<br>We recommend to set it to 100 per call</p>
+                      <input type="number" min="1" max="1000" class="form-control" value="<?= siteConfig('fEngageLimit'); ?>" name="engage_limit" />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Last time connection</label>
+                      <p style="color:#999">Activate the system only for people who have not connected to the site in the last "X" hours<br>Set the value in hours</p>
+                      <input type="number" min="1" max="1000" class="form-control" value="<?= siteConfig('fEngageTime'); ?>" name="engage_time" />
+                    </div>                      
+                  </div>
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary" >Update Engagement settings</button>            
+                  </div>
+                </form>                  
+              </div>
+                </div>
+        </div>        
+  </section>
+</div>    
+ <script>aurl = 'sfake'; </script>  

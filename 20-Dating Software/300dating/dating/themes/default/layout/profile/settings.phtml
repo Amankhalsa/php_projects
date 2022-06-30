@@ -1,0 +1,383 @@
+<script>
+    url = "settings";
+</script>
+<div class="col s8 real fix-width-content" id="site-content">
+    <div class="profile-menu ">
+        <ul>
+            <li data-settings="1" class="header-settings selected">
+                <?= $sm['lang'][127]['text']; ?>
+            </li>
+            <li data-settings="3" class="header-settings">
+                <?= $sm['lang'][221]['text']; ?>
+            </li>
+            <li data-settings="2" class="header-settings">
+                <?= $sm['lang'][128]['text']; ?>
+            </li>
+            <li data-settings="4" class="header-settings">
+                <?= $sm['lang'][130]['text']; ?>
+            </li>
+            <li data-settings="5" class="header-settings">
+                <?= $sm['lang'][131]['text']; ?>
+            </li>
+        </ul>
+    </div>
+    <div class="wall" id="site-settings" style="padding-bottom: 60px">
+        <div data-settings-page="1">
+            <form class="col s12" method="post" id="update-profile">
+                <h5><?= $sm['lang'][132]['text']; ?></h5>
+                <div class="divider"></div>
+                <p style="color:#999;">
+                    <?= $sm['lang'][133]['text']; ?>
+                </p>
+                <div class="row">
+                    <div class="col s3">
+                        <div class="form-label"> <b class="form-label__value"><?= $sm['lang'][26]['text']; ?> :</b> </div>
+                    </div>
+                    <div class="col s5">
+                        <input type="text" name="name" class="input input--sm" value="<?= $sm['user']['name']; ?>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <div class="form-label"> <b class="form-label__value"><?= $sm['lang'][28]['text']; ?>:</b></div>
+                    </div>
+                    <div class="input-field col s5">
+                        <input class="input input--sm" type="text" name="email" value="<?= $sm['user']['email']; ?>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <div class="form-label"> <b class="form-label__value"><?= $sm['lang'][30]['text']; ?>:</b> </div>
+                    </div>
+                    <?php $timestamp = strtotime($sm['user']['birthday']); ?>
+                        <div class="input-field col s1" style="margin-right: 15px;">
+                            <div class="select select--sm select--language value">
+                                <input type="hidden" name="day" data-day-selected-value value="<?= date(" d ", $timestamp); ?>" class="select-value">
+                                <div class="select-label" data-day-selected>
+                                    <?= date("d", $timestamp); ?>
+                                </div>
+                                <div class="select-options tc">
+                                    <div class="scroll">
+                                        <div class="scroll_" tabindex="-1">
+                                            <div class="scroll__">
+                                                <ul class="options">
+                                                    <?= date_dropdown(1); ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-field col s1" style="margin-right: 15px;">
+                            <div class="select select--sm select--language value">
+                                <input type="hidden" name="month" data-month-selected-value value="<?= date(" m ", $timestamp); ?>" class="select-value">
+                                <div class="select-label" data-month-selected>
+                                    <?= date("m", $timestamp); ?>
+                                </div>
+                                <div class="select-options tc">
+                                    <div class="scroll">
+                                        <div class="scroll_" tabindex="-1">
+                                            <div class="scroll__">
+                                                <ul class="options">
+                                                    <?= date_dropdown(0,1); ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-field col s2">
+                            <div class="select select--sm select--language value">
+                                <input type="hidden" name="year" data-year-selected-value value="<?= date(" Y ", $timestamp); ?>" class="select-value">
+                                <div class="select-label" data-year-selected>
+                                    <?= date("Y", $timestamp); ?>
+                                </div>
+                                <div class="select-options tc">
+                                    <div class="scroll">
+                                        <div class="scroll_" tabindex="-1">
+                                            <div class="scroll__">
+                                                <ul class="options">
+                                                    <?= date_dropdown(0,0,1); ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <div class="form-label"> <b class="form-label__value"><?= $sm['lang'][32]['text']; ?>:</b></div>
+                    </div>
+                    <div class="input-field col s5">
+                        <input class="input input--sm" type="text" id="loc" value="<?= $sm['user']['city']; ?>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <div class="form-label"> <b class="form-label__value"><?= $sm['lang'][117]['text']; ?>:</b></div>
+                    </div>
+                    <div class="input-field col s5">
+                        <input class="input input--sm" type="text" id="bio" name="bio" value="<?= $sm['user']['bio']; ?>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <div class="form-label"> <b class="form-label__value"><?= $sm['lang'][134]['text']; ?>:</b></div>
+                    </div>
+                    <div class="input-field col s5">
+                        <select class="input input--sm" name="lang">
+                            <option value="<?= $sm['user']['lang']; ?>">
+                                <?= getCurrentLang($sm['user']['lang']); ?>
+                            </option>
+                            <?= getSiteLangs($sm['user']['lang']); ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s3">
+                        <div class="form-label"> <b class="form-label__value"><?= $sm['lang'][34]['text']; ?>:</b></div>
+                    </div>
+                    <div class="input-field col s5">
+                        <select class="input input--sm" name="gender">
+                            <?php
+                                        foreach($sm['genders'] as $entry){
+                                            if($entry['id'] == $sm['user']['gender']){
+                                                echo '<option value="'.$entry['id'].'" selected style="color:#000;">'.$entry['text'].'</option>';
+                                            } else {
+                                                echo '<option value="'.$entry['id'].'" style="color:#000;">'.$entry['text'].'</option>';
+                                            }
+                                        }
+                                    ?>
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" value="update" name="action" />
+                <input type="hidden" name="city" id="locality" value="<?= $sm['user']['city']; ?>" />
+                <input type="hidden" name="country" id="country" value="<?= $sm['user']['country']; ?>" />
+                <input type="hidden" name="lat" id="lat" value="<?= $sm['user']['lat']; ?>" />
+                <input type="hidden" name="lng" id="lng" value="<?= $sm['user']['lng']; ?>" />
+                <br>
+                <br>
+                <div class="divider"></div>
+                <h5 style="font-size:18px;"><?= $sm['lang'][222]['text']; ?></h5>
+                <?php
+                  $arr = array();
+                  $arr = profileQuestion($sm['user']['lang']);
+                  foreach($arr as $entry){ $q = $entry['question']; ?>
+                    <div class="row">
+                        <div class="input-field col s3">
+                            <div class="form-label">
+                                <b class="form-label__value"><?= $entry['question'];?></b>
+                            </div>
+                        </div>
+                        <div class="input-field col s5">
+                        <?php 
+                            if($entry['method'] == 'select'){ 
+                                $answer = array();
+                                $answer = profileQuestionAnswer($entry['id'],$sm['user']['lang']); ?>
+                                 <select class="input input--sm" name="extended<?=$entry['id']; ?>">
+                                    <option value="<?= userProfileAnswer($sm['user']['id'],$entry['id']); ?>">
+                                        <?= userProfileAnswer($sm['user']['id'],$entry['id']); ?>
+                                    </option>                                    
+                                    <?php foreach($answer as $a){ ?>
+                                      <option value="<?= $a['answer']; ?>"><?= $a['answer']; ?></option>
+                                    <?php } ?>
+                                </select>
+                            <?php } else { ?>
+                                <input class="input input--sm" name="extended<?=$entry['id']; ?>" type="text" 
+                                    value="<?= userProfileAnswer($sm['user']['id'],$entry['id']); ?>">
+                            <?php } ?>                                        
+                        </div>
+                    </div>
+                    <?php } ?>
+                    
+                <div class="row">
+                    <br>
+                    <br>
+                    <p id="update-error" class="red darken-4" style="color:#fff;font-size:16px;padding:5px;display:none;"></p>
+                    <p id="update-success" class="green darken-1" style="color:#fff;border-radius:10px;font-size:16px;padding:5px;padding-left:20px;display:none;"></p>
+                    <div class="input-field col s4">
+                        <button type="submit" style="font-size: 18px" class="waves-effect waves-light btn blue darken-2" id="upd-btn">
+                            <?= $sm['lang'][135]['text']; ?>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="divider"></div>
+        </div>
+        <div data-settings-page="2" style='display:none'>
+            <div class="row">
+                <form class="col s12">
+                    <h5><?= $sm['lang'][73]['text']; ?></h5>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <p style="color:#999;">
+                            <?= $sm['lang'][140]['text']; ?>
+                        </p>
+                        <p style="color:#666;">
+                            <?= $sm['lang'][141]['text']; ?>:
+                                <? if($sm['user']['premium'] == 0){?>
+                                    <b style='font-size:16px;'><?= $sm['lang'][219]['text']; ?></b>
+                                    <? } else { ?>
+                                        <b style='font-size:16px;'><?= $sm['lang'][438]['text']; ?></b>
+                                        <? } ?>
+                                            <br>
+                                            <?= $sm['lang'][142]['text']; ?>: <b style='font-size:16px;'><?= $sm['user']['credits']; ?></b>
+                                                <br>
+                                                <br>
+                                                <a class="waves-effect waves-light btn blue darken-2" onclick="goTo('credits');">
+                                                    <?= $sm['lang'][143]['text']; ?>
+                                                </a>
+                                                <? if($sm['user']['premium'] == 0){?>
+                                                    <a class="waves-effect waves-light btn amber darken-4" onclick="goTo('premium');">
+                                                        <?= $sm['lang'][144]['text']; ?>
+                                                    </a>
+                                                    <? } ?>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div data-settings-page="3" style='display:none'>
+            <div class="row">
+                <form class="col s12">
+                    <h5><?= $sm['lang'][221]['text']; ?></h5>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <label>
+                                <?= $sm['lang'][487]['text']; ?>
+                            </label>
+                        </div>
+                        <div class="input-field col s6">
+                            <div class="radio">
+                                <input id="yes1" value="1" name="fans" type="radio" <? if($sm[ 'user_notifications'][ 'fan']==1 ){echo 'checked';} ?> >
+                                <label for="yes1" class="radio-label">
+                                    <?= $sm['lang'][175]['text']; ?>
+                                </label>
+                            </div>
+                            <div class="radio" style="position:relative;left: 80px;top:-10px;">
+                                <input id="no1" value="0" name="fans" type="radio" <? if($sm[ 'user_notifications'][ 'fan']==0 ){echo 'checked';} ?> >
+                                <label for="no1" class="radio-label">
+                                    <?= $sm['lang'][176]['text']; ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <label>
+                                <?= $sm['lang'][488]['text']; ?>
+                            </label>
+                        </div>
+                        <div class="input-field col s6">
+                            <div class="radio">
+                                <input name="match_m" type="radio" value="1" <? if($sm[ 'user_notifications'][ 'match_m']==1 ){echo 'checked';} ?> id="yes4" />
+                                <label class="radio-label" for="yes4">
+                                    <?= $sm['lang'][175]['text']; ?>
+                                </label>
+                            </div>
+                            <div class="radio" style="position:relative;left: 80px;top:-10px;">
+                                <input name="match_m" type="radio" class="radio-label" value="0" <? if($sm[ 'user_notifications'][ 'match_m']==0 ){echo 'checked';} ?> id="no4" />
+                                <label class="radio-label" for="no4">
+                                    <?= $sm['lang'][176]['text']; ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s5">
+                            <label>
+                                <?= $sm['lang'][489]['text']; ?>
+                            </label>
+                        </div>
+                        <div class="input-field col s6">
+                            <div class="radio">
+                                <input name="near" type="radio" class="radio-label" value="1" <? if($sm[ 'user_notifications'][ 'near_me']==1 ){echo 'checked';} ?> id="yes2" />
+                                <label for="yes2" class="radio-label">
+                                    <?= $sm['lang'][175]['text']; ?>
+                                </label>
+                            </div>
+                            <div class="radio" style="position:relative;left: 80px;top:-10px;">
+                                <input name="near" type="radio" class="radio-label" value="0" <? if($sm[ 'user_notifications'][ 'near_me']==0 ){echo 'checked';} ?> id="no2" />
+                                <label for="no2" class="radio-label">
+                                    <?= $sm['lang'][176]['text']; ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="height: 100px;">
+                        <div class="input-field col s5">
+                            <label>
+                                <?= $sm['lang'][490]['text']; ?>
+                            </label>
+                        </div>
+                        <div class="input-field col s6">
+                            <div class="radio">
+                                <input name="message" type="radio" class="radio-label" value="1" <? if($sm[ 'user_notifications'][ 'message']==1 ){echo 'checked';} ?> id="yes3" />
+                                <label for="yes3" class="radio-label">
+                                    <?= $sm['lang'][175]['text']; ?>
+                                </label>
+                            </div>
+                            <div class="radio" style="position:relative;left: 80px;top:-10px;">
+                                <input name="message" type="radio" class="radio-label" value="0" <? if($sm[ 'user_notifications'][ 'message']==0 ){echo 'checked';} ?> id="no3" />
+                                <label for="no3" class="radio-label">
+                                    <?= $sm['lang'][176]['text']; ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div data-settings-page="4" style='display:none'>
+            <div class="row">
+                <form class="col s12" id="change-password">
+                    <h5><?= $sm['lang'][145]['text']; ?></h5>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <p style="color:#999;">
+                            <?= $sm['lang'][146]['text']; ?>
+                        </p>
+                        <div class="input-field col s2">
+                            <?= $sm['lang'][147]['text']; ?>:
+                        </div>
+                        <div class="input-field col s5">
+                            <input type="password" class="input input--sm" name="new_password">
+                            <input type="hidden" name="action" value="changep">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4">
+                            <button type="submit" id="change-pwd-btn" class="waves-effect waves-light btn blue darken-2">
+                                <?= $sm['lang'][145]['text']; ?>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div data-settings-page="5" style='display:none'>
+            <div class="row">
+                <form class="col s12" id="delete-profile">
+                    <h5><?= $sm['lang'][148]['text']; ?></h5>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <p style="color:#999;">
+                            <?= $sm['lang'][149]['text']; ?>
+                                <br>
+                                <br>
+                                <a class="waves-effect waves-light btn red" id="delete-acc">
+                                    <?= $sm['lang'][150]['text']; ?>
+                                </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

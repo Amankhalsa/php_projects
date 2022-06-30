@@ -1,0 +1,1 @@
+<?phprequire_once('assets/includes/core.php');header('Location:'.siteConfig('mobile_site'));

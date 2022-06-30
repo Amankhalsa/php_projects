@@ -1,0 +1,56 @@
+			<script>
+			url = "discover";
+			</script>             
+			<div class="col s8 real fix-width-content scroll" id="site-content" style="background: #fff;">
+				<div class="top-user-header" style="border-bottom:1px solid #eee" >
+					<img class="like-top" src="<?= $sm['config']['theme_url']; ?>/images/like.jpg" data-id>
+					<img class="nolike-top" src="<?= $sm['config']['theme_url']; ?>/images/nolike.jpg" data-id/>
+					<h2 id="dis_name" class="comforta"> </h2>
+					<span id="dis_city"></span>
+					<div style="position: absolute;right: 35px;top:30px;">
+					    <div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn close-slider-btn" style="float:right;display:none;" onclick="closeSlider()">
+						    <i class="icon ion-close-round" style="font-size: 24px;position: absolute;top: 10px;left:13px"></i> 
+					    </div>	
+					</div>
+				</div>
+				<div class="discover" style="height:450px" id="dis_photos">
+				</div>
+			  <div style="position:absolute;top:570px;width:100%;height:70px;">
+				<div class="big-photo__footer js-profile-footer-container">
+				    <div class="banner-container js-banner-slot">
+				        <div class="banner banner--spp js-banner-wrap">
+				            <div class="banner-content">
+				                <div class="banner-promo"> <mark class="brick brick--sm brick--spp"><img src="<?= $sm['config']['theme_url']; ?>/images/vip_y.png" /> </mark></div>
+				                <div class="banner-text"><?= $sm['lang'][432]['text']; ?>!</div>
+				            </div>
+				            <div class="banner-buttons">
+				                <div class="btn btn--sm btn--spp js-promo-btn" onclick="goTo('premium')"> <span class="btn-txt"><?= $sm['lang'][433]['text']; ?>!</span></div>
+				            </div>
+				        </div>
+				    </div>
+				</div>		  
+			  </div>
+			  <div class="footer-badoo" style="margin-top:555px;height: 300px" >
+				<center>
+					<div class="ad-zone">
+						<?php echo siteConfig('ads'); ?>
+					</div>
+					<?php if(siteConfig('app_ios') != '' || siteConfig('app_android') != ''){ ?>
+						<div class="download-apps">
+							<h3><?= $sm['lang'][434]['text']; ?>:</h3>
+							<?php if(siteConfig('app_ios') != ''){ ?>
+									<img src="<?php echo $sm['config']['theme_url']; ?>/images/ios.png" />
+									<h2><a href="<?php echo siteConfig('app_ios'); ?>"><?= $sm['lang'][435]['text']; ?></a></h2>
+							<?php } ?>
+							<?php if(siteConfig('app_android') != ''){ ?>
+									<img src="<?php echo $sm['config']['theme_url']; ?>/images/android.png" />
+									<a class="comforta" href="<?php echo siteConfig('app_android'); ?>"><?= $sm['lang'][436]['text']; ?></a>
+							<?php } ?>							
+						</div>
+					<?php } ?>
+					<div class="bottom-left">
+						<a href="<?php echo $sm['config']['site_url']; ?>/terms"><h3><?= $sm['lang'][437]['text']; ?></h3></a> <a href="<?php echo $sm['config']['site_url']; ?>/privacy"><h3><?= $sm['lang'][63]['text']; ?></h3></a> <a href="mailto:<?php echo $sm['config']['email']; ?>"><h3><?= $sm['lang'][64]['text']; ?></h3></a> <h3>  <?php echo $sm['config']['name']; ?> 2018 </h3>
+					</div>			
+				</center>
+			  </div>				
+            </div> 

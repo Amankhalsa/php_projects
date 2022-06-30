@@ -1,0 +1,117 @@
+<ion-modal-view>
+  <ion-header-bar style="background:#fff">
+    <button class="button button-clear comforta" ng-if="!loading" style="font-size:14px" ng-click="closeEditProfileModal()"><center><i class="icon"><svg viewBox="0 0 64 64" id="navigation-bar-close" width="100%" height="100%"><path d="M8.68 10.49l44.83 44.83a1.28 1.28 0 0 0 1.81-1.81L10.49 8.68a1.28 1.28 0 0 0-1.81 1.81z"></path><path d="M53.44 8.75l-44.7 44.7a1.28 1.28 0 0 0 1.82 1.8l44.7-44.7a1.28 1.28 0 0 0-1.82-1.8z"></path></svg></i></center></button>
+  </ion-header-bar>	
+  <ion-content class="profile">  
+    <div class="photos" >
+      <div class="row">
+        <div class="col col-66">
+            <div class="photo-pickable"  ng-if="photo1 == null" >
+              <div class="w-full r-3x profileP" ng-click="uploadPhoto()" style="height:200px;background-color:#f3f3f3;"></div>
+            </div>
+            <div class="photo-pickable" ng-if="photo1 != null">
+              <div class="w-full r-3x profileP" style="height:200px;background-color:#f3f3f3;background-image:url({{trustPhoto(photo1.photo)}})"></div>
+            </div>
+        </div>
+		
+        <div class="col col-33">
+            <div class="photo-pickable" ng-if="photo2 == null" >
+              <div class="w-full r-3x m-b-xs profileP" ng-click="uploadPhoto()" style="height:100px;background-color:#f3f3f3;"></div>
+            </div>
+            <div class="photo-pickable" ng-if="photo2 != null" >
+              <div class="w-full r-3x m-b-xs profileP" ng-click="showPhotoOptions(2,photo2.id,photo2.blocked,photo2.profile)"  style="height:100px;background-color:#f3f3f3;background-image:url({{trustPhoto(photo2.photo)}})"></div>
+            </div>
+			
+            <div class="photo-pickable" ng-if="photo3 == null" ng-click="uploadPhoto()">
+              <div class="w-full r-3x profileP" style="height:100px;background-color:#f3f3f3;"></div>
+            </div>
+            <div class="photo-pickable" ng-if="photo3 != null">
+              <div class="w-full r-3x profileP" ng-click="showPhotoOptions(3,photo3.id,photo3.blocked,photo3.profile)"  style="height:100px;background-color:#f3f3f3;background-image:url({{trustPhoto(photo3.photo)}})"></div>
+            </div>
+        </div>
+		
+      </div>
+      <div class="row">
+        <div class="col col-33">
+            <div class="photo-pickable" ng-if="photo4 == null" ng-click="uploadPhoto()">
+              <div class="w-full r-3x profileP" style="height:100px;background-color:#f3f3f3;"></div>
+            </div>
+            <div class="photo-pickable" ng-if="photo4 != null">
+              <div class="w-full r-3x profileP" ng-click="showPhotoOptions(4,photo4.id,photo4.blocked,photo4.profile)"  style="height:100px;background-color:#f3f3f3;background-image:url({{trustPhoto(photo4.photo)}})"></div>
+            </div>
+        </div>
+		
+        <div class="col col-33">
+            <div class="photo-pickable" ng-if="photo5 == null" ng-click="uploadPhoto()">
+              <div class="w-full r-3x profileP" style="height:100px;background-color:#f3f3f3;"></div>
+            </div>
+            <div class="photo-pickable" ng-if="photo5 != null">
+              <div class="w-full r-3x profileP" ng-click="showPhotoOptions(5,photo5.id,photo5.blocked,photo5.profile)"  style="height:100px;background-color:#f3f3f3;background-image:url({{trustPhoto(photo5.photo)}})"></div>
+            </div>
+        </div>
+		
+        <div class="col col-33">
+            <div class="photo-pickable" ng-if="photo6 == null" ng-click="uploadPhoto()">
+              <div class="w-full r-3x profileP" style="height:100px;background-color:#f3f3f3;"></div>
+            </div>
+            <div class="photo-pickable" ng-if="photo6 != null">
+              <div class="w-full r-3x profileP" ng-click="showPhotoOptions(6,photo6.id,photo6.blocked,photo6.profile)"  style="height:100px;background-color:#f3f3f3;background-image:url({{trustPhoto(photo6.photo)}})"></div>
+            </div>
+        </div>  		
+      </div>
+    </div>  
+    <div class="list m-n">
+      <div class="item item-divider b-none" style="background:#fff"></div>
+	 
+      <div class="item" >
+	    <span data-lid="26"></span>
+		<input style="font-size:16px;display:inline-table;border:none;background:none;float:right;text-align:right;" id="userName" value="{{name}}"/>
+      </div>
+	  
+      <div class="item" >
+	    <span data-lid="300"></span>
+		<input style="margin:0;padding:0;font-size:16px;display:inline-table;border:none;background:none;float:right;text-align:right;"  id="userAge" value="{{age}}"/>
+      </div>
+
+      <div class="item item-toggle" ng-click="updateUserGender()">
+	    <span data-lid="34"></span>
+		<label class="toggle" style="font-size:16px;top:14px;">
+			<span>{{gender}}</span>
+		</label>
+      </div>
+
+      <div class="item item-toggle" ng-repeat="q in questions"  ng-click="updateUserQuestion(q,q.answers)">
+	    <span>{{q.question}}</span>
+        <label class="toggle" style="font-size:16px;top:14px;" ng-if="q.method == 'select'">
+			<span ng-if="q.userAnswer != ''" class="userAnswer{{q.id}}" style="color: #111">{{q.userAnswer}}</span>
+			<span ng-if="q.userAnswer == ''" class="userAnswer{{q.id}}" style="color: #999">{{noData}}</span>
+        </label>
+		<input ng-if="q.method == 'text'" style="margin:0;padding:0;font-size:16px;display:inline-table;border:none;background:none;float:right;text-align:right;" value="{{q.userAnswer}}" />        
+      </div>
+
+      <div class="item item-toggle" ng-click="updateUserLanguage()">
+	    <span>{{lang}}</span>
+        <label class="toggle" style="font-size:16px;top:14px;">
+        	{{userLang}}
+        </label>
+      </div>      
+
+ 
+
+    </div>	
+	
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none" data-tid="100"></div>
+      <div class="item">
+        <textarea id="userBio" style="width:100%;font-size:16px;">{{bio}}</textarea>
+      </div>
+    </div>
+  <div flow-init
+       flow-name="uploader.flow"
+       flow-files-added="processUserFiles($files)">
+    <button flow-btn type="file" id="uploadUserPhoto" style="display: none;">Upload Images</button>
+   </div> 
+ <div class="item item-divider b-none" style="background:#fff"></div>
+  </ion-content>
+</ion-modal-view>

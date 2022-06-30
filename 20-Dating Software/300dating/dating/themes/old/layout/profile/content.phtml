@@ -1,0 +1,378 @@
+<?php 
+if($_GET['id'] != NULL ){
+	$usid = secureEncode($_GET['id']);	
+	getUserInfo($usid,1);
+	$new = getUserTotalConv($sm['user']['id'],$_GET['id']);
+}
+$count = getUserTodayConv($sm['user']['id']);
+$check = blockedUser($sm['user']['id'],$sm['profile']['id']);
+if($check == 1){
+	header('Location:'.$sm['config']['site_url']);
+}
+
+$profile_info = json_encode($sm['profile']);
+$fan = isFan($sm['user']['id'],$sm['profile']['id']);
+$me = false;
+if($sm['user']['id'] == $sm['profile']['id']) { 
+	$me = true; 
+} else {
+	visit($sm['user']['id'],$sm['profile']['id']);
+	$checkConv = checkConv($sm['user']['id'],$sm['profile']['id']);
+}
+if($new == 0 && $count >= $sm['basic']['chat'] && $sm['user']['premium'] == 0 || $new == 0 && $count >= $sm['premium']['chat']){
+	$checkConv = 1;
+}	
+echo 
+'<script>
+current_user_id = ' . $sm['profile']['id'] .';
+var profile_info = '. $profile_info  . ';	
+url = "profile";
+</script>';
+?>
+			<div class="col s8 real fix-width-content" id="site-content" style="background: #fff;">
+				<div class="top-user-header" style="display:inline-block;width:55%;">
+					<?php if(!$me){ ?>
+						<?php if($fan == 1){ ?>
+							<img class="like-top" src="<?= $sm['config']['theme_url']; ?>/images/liked.jpg">
+							<img class="nolike-top" src="<?= $sm['config']['theme_url']; ?>/images/noliked.jpg"/>
+						<?php } else { ?>
+							<img class="like-top" src="<?= $sm['config']['theme_url']; ?>/images/like.jpg" data-id="<?=$sm['profile']['id']; ?>">
+							<img class="nolike-top" src="<?= $sm['config']['theme_url']; ?>/images/nolike.jpg" data-id="<?=$sm['profile']['id']; ?>"/>	
+						<?php } ?>
+						<h2>
+							<?= $sm['profile']['name']; ?>, <?= $sm['profile']['age']; ?>
+							<?php if($sm['profile']['premium'] == 1){
+								echo '<div class="premium" data-tooltip="'.$sm['lang'][438]['text'].'"><i class="mdi-editor-attach-money"></i></div>';
+							}?>
+							<?php if($sm['profile']['verified'] == 1){
+								echo '<div class="verified" data-tooltip="'.$sm['lang'][439]['text'].'"><i class="mdi-action-verified-user"></i></div>';
+							}?>
+							<?php if($sm['profile']['popular'] > 1000){
+								echo '<div class="popular" data-tooltip="'.$sm['lang'][440]['text'].'"><i class="mdi-social-whatshot"></i></div>';
+							}?>	
+						</h2>
+						<?  if($sm['profile']['status'] == 'y'){
+							echo '<span style="color:#17D42B">'.$sm['lang'][441]['text'].'</span>';
+						} else {
+							echo '<span>'.$sm['lang'][465]['text'].' '.time_elapsed_string($sm['profile']['last_access']).'</span>';
+						} ?>
+					<?php } else { ?>
+						<h2 style="left: 20px;">
+							<?= $sm['profile']['name']; ?>, <?= $sm['profile']['age']; ?>
+							<?php if($sm['profile']['premium'] == 1){
+								echo '<div class="premium" data-tooltip="'.$sm['lang'][438]['text'].'"><i class="mdi-editor-attach-money"></i></div>';
+							}?>
+							<?php if($sm['profile']['premium'] == 1){
+								echo '<div class="verified" data-tooltip="'.$sm['lang'][439]['text'].'"><i class="mdi-action-verified-user"></i></div>';
+							}?>
+							<div class="popular" data-tooltip="<?= $sm['lang'][440]['text']; ?>"><i class="mdi-social-whatshot"></i></div>
+						</h2>
+						<?  if($sm['profile']['status'] == 'y'){
+							echo '<span style="left:22px;color:#17D42B">'.$sm['lang'][441]['text'].'</span>';
+						} else {
+							echo '<span style="left:22px;">'.$sm['lang'][465]['text'].' '.time_elapsed_string($sm['profile']['last_access']).'</span>';
+						} ?>
+					<?php } ?>
+			</div>					
+				<div class="top-user-header-right">
+					<?php if($me){ ?>
+					    <a href="/logout"><div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn" style="float:right;margin-left: 15px;">
+						    <i class="icon ion-android-exit" style="font-size: 24px;position: absolute;top: 10px;left:13px"></i> 
+					    </div></a>
+					    <? if($sm['user']['admin'] == 1){ echo'
+					    <a href="/admin"><div class="btn btn--white profile-menu__chat-btn" style="float:right;">
+					    	<span class="btn-txt montserrat">Admin</span>
+					    </div></a>'; } ?>					    
+					    <a href="/settings">
+					    <div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn" style="float:right;margin-right: 15px;">
+						    <i class="icon ion-gear-a" style="font-size: 24px;position: absolute;top: 10px;left:12px"></i> 
+					    </div></a>	
+					    <div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn" data-url="photos" style="float:right;margin-right: 15px;" data-index="0">
+						    <i class="icon ion-images" style="font-size: 24px;position: absolute;top: 10px;left:12px"></i> 
+					    </div>					    				    
+				    <?php } else { ?>
+					    <div class="btn btn--white profile-menu__chat-btn" style="margin-left: 50px;" data-url="chat" data-uid="<?= $sm['profile']['id']; ?>">
+					    	<span class="btn-txt montserrat" style="padding-left: 15px;">
+					    	<i class="icon ion-ios-chatbubble" style="font-size: 24px;position: absolute;top: 8px;left:15px"></i><?= $sm['lang'][466]['text']; ?></span>
+					    </div>
+					    <div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn" data-url="photos" data-index="0">
+						    <i class="icon ion-images" style="font-size: 24px;position: absolute;top: 10px;left:12px"></i> 
+					    </div>
+					    <div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn" style="float: right;"
+					     onclick="reportUser(<?= $sm['profile']['id']; ?>,'<?= $sm['profile']['first_name']; ?>','<?= $sm['profile']['profile_photo']; ?>');">
+						    <i class="icon ion-android-alert" style="font-size: 24px;position: absolute;top: 10px;left:12px"></i> 
+					    </div>					    					    
+				    <?php } ?>
+				</div>	
+				<?php if($me){ ?>
+				<div style="position: absolute;left: 2%;top:130px;z-index: 9999999;display:none" data-photos-action="profile" 
+				data-set-profile="true" data-pid="">
+				    <div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn close-slider-btn" style="float:right;" >
+					    <i class="icon ion-person-add" style="font-size: 24px;position: absolute;top: 10px;left:13px"></i> 
+				    </div>	
+				</div>
+				<div style="position: absolute;left: 9%;top:130px;z-index: 9999999;display:none" data-photos-action="profile" 
+				data-delete-photo="true" data-pid="">
+				    <div class="btn btn--white btn--ico tooltip-no-js-wrap js-profile-header-btn close-slider-btn" style="float:right;" >
+					    <i class="icon ion-trash-b" style="font-size: 24px;position: absolute;top: 10px;left:13px"></i> 
+				    </div>	
+				</div>				
+				<?php } ?>
+				<div class="gall" style="display: none; z-index: 5;" >
+				</div>                
+                <div class="profile-content">
+                <?php if($me){ ?>
+                <div class="profile-photos" >                
+	                <div class="photo-list__action" id="addPhotos" style="cursor:pointer;background: #2B65F8;width: 140px;height: 140px;display: inline-block;">
+	                    <div class="inline">
+	                    	<i class="icon icon--lg icon--white ion-android-camera" style="font-size: 28px"></i>
+	                   		<b class="photo-list__action-title"><?= $sm['lang'][74]['text']; ?></b>
+	                   	</div>
+	                   	<span class="middle"></span>
+	                 </div>
+	                <!--
+	                <div class="photo-list__action" id="private-photos" style="left:140px;cursor:pointer;background: #4F209B;width: 140px;height: 140px;display: inline-block;">
+	                    <div class="inline">
+	                    	<i class="icon icon--lg icon--white ion-android-camera" style="font-size: 28px"></i>
+	                   		<b class="photo-list__action-title"><?= $sm['lang'][472]['text']; ?></b>
+	                   	</div>
+	                   	<span class="middle"></span>
+	                 </div>	                 
+					-->
+	                <div style="margin-left: 140px;" id="profile-photos">                    
+					<?= getUserPhotosHeader($sm['profile']['id']); ?>  
+					</div>
+                </div> 
+                <?php } else { ?>
+                <div class="profile-photos" id="profile-photos">                  
+					<?= getUserPhotosHeader($sm['profile']['id']); ?>  
+                </div>
+                <?php } ?>
+					<div class="profile-info-v2" style="max-height: 1150px;">
+					    <section class="profile-info-v2__left">
+								<?php if($me){ ?>
+								<div class="js-profile-entry-container">
+								    <div class="section section--profile" >
+								        <div class="entry-points"  style="padding-bottom: 25px;">
+								            <div class="entry-point" style="cursor: pointer;" onclick="goTo('popularity');">
+								                <div class="entry-point__icon"> <i class="ico-popularity ico-popularity--lg ico-popularity--low"></i> </div>
+								                <div class="grey" style="font-size: 13px;"><?= $sm['lang'][398]['text']; ?></div>
+								                <b class="inline" style="font-size: 13px;margin-top: 10px"><?= $sm['lang'][473]['text']; ?></b>
+								            </div>
+								            <div class="entry-point" style="cursor: pointer;" onclick="goTo('credits');">
+								                <div class="entry-point__icon"><img src="<?= $sm['config']['theme_url']; ?>/images/icon-coins.png"
+								                style="width: 40px;margin-top: 10px"></div>
+								                <div class="grey" style="font-size: 13px;"><?= $sm['user']['credits']; ?><?= $sm['lang'][285]['text']; ?></div>
+								                <b class="inline" style="font-size: 13px;margin-top: 10px"><?= $sm['lang'][94]['text']; ?></b>
+								            </div>
+								            <div class="entry-point" style="cursor: pointer;" onclick="goTo('premium');">
+								                <div class="entry-point__icon"><img src="<?= $sm['config']['theme_url']; ?>/images/icon-spp.png"
+								                style="width: 40px;margin-top: 10px"></div>
+								                <div class="grey" style="font-size: 13px;"><?= $sm['lang'][474]['text']; ?></div>
+								                <?php if($sm['user']['premium'] == 1){
+								                	echo '<b class="inline" style="font-size: 13px;margin-top: 10px">Activated</b>';
+								                } else {
+								                	echo '<b class="inline" style="font-size: 13px;margin-top: 10px">Not activated</b>';
+								                }
+								                ?>
+								            </div>
+								        </div>
+								    </div>
+								</div>
+								<?php } else if ($checkConv == 0 ){ ?>
+									<div class="profile-menu__fast-message" style="margin-top: 60px" >
+									    <div class="fast-message fast-message--header" >
+									        <div class="fast-message__inner">
+									            <div class="fast-message__close js-close" onclick="closeFastMessage();">
+									                <i class="icon ion-close-round"></i>
+									            </div>
+												<div class="fast-message__state" id="fast-ok" style="display: none">
+												    <div class="fast-message__state-icon">
+												    	<img src="<?= $sm['config']['theme_url']; ?>/images/message-sent.jpg">
+												    </div>
+												    <div class="fast-message__state-title comforta"><?= $sm['lang'][467]['text']; ?>
+												    </div>
+												</div>								            
+									            <div class="fast-message__content">
+									                <div class="fast-message__screen">
+									                    <div class="fast-message__screen-icon">
+									                        <i class="icon icon--lg ion-chatbubble-working" style="font-size: 44px"></i>
+									                    </div>
+									                    <p class="fast-message__screen-text comforta"><?= $sm['lang'][475]['text']; ?> <?= $sm['profile']['first_name'];?><?= $sm['lang'][469]['text']; ?>.
+									                    </p>
+									                </div>
+									            </div>
+									            <div class="fast-message__footer">
+									                <div class="fast-message__field-wrapper">
+									                    <div class="fast-message__field">
+									                        <div class="text-field text-field--sm">
+									                            <input class="text-field__input js-message-input comfortaa" type="text" placeholder="<?= $sm['lang'][89]['text']; ?>" id="fastMessageVal" style="margin-left:10px;outline:none">
+									                        </div>
+									                    </div>
+									                    <div class="fast-message__send">
+									                        <button class="btn btn--sm" onclick="fastMessage(<?=$sm['profile']['id'];?>)" style="background: none">
+									                            <div class="btn__icon " ><i class="icon ion-android-send" style="font-size: 20px;color:#2B65F8"></i>
+									                            </div>
+									                        </button>
+									                    </div>
+									                </div>
+									            </div>
+									        </div>
+									    </div>
+									</div>
+								<?php } ?>	
+					        <div class="js-profile-location-container js-core-events-container">											        
+					            <div class="section section--profile">
+					                <h2 class="profile-h"><?= $sm['lang'][454]['text']; ?></h2>
+					                <div class="section-editable">
+					                    <div class="js-wrap"> <span class="js-location-label montserrat">
+					                    	<?= $sm['profile']['city']; ?> , <?= $sm['profile']['country']; ?> </span>
+					                        <div class="location-map location-map--static">
+					                            <div class="location-map__cached">
+					                            <img src="https://maps.googleapis.com/maps/api/staticmap?center=<?= $sm['profile']['lat']; ?>,<?= $sm['profile']['lng']; ?>&zoom=16&size=640x300&path=weight:3%7Ccolor:blue%7Cenc:{coaHnetiVjM??_SkM??~R&key=AIzaSyBFZHfyVXQ0H1Fh30rrZEOUgAi55_zYbZE" alt="" class="js-profile-location-map-image"></div>
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="js-profile-iht-container">
+					            <div class="section section--profile">
+					                <h2 class="profile-h"><?= $sm['profile']['first_name']; ?><?= $sm['lang'][457]['text']; ?>..</h2>
+					                <div class="montserrat"><?= $sm['lang'][458]['text']; ?></div>
+					            </div>
+					        </div>
+					        <div class="js-profile-interests-container">
+					            <div class="section section--profile">
+					                <h2 class="profile-h"><?= $sm['lang'][276]['text']; ?></h2>
+					                <div class="interests" >
+										<? if($sm['profile']['id'] == $sm['user']['id']){ ?>
+										
+										<div class="add-int" style="margin-right: 25px;top:35px">
+											<input type="text" name="add_interest" placeholder="<?= $sm['lang'][283]['text']; ?> <?= $sm['lang'][276]['text']; ?>" id="searchBox"  class="input input--sm" />
+											<ul id="searchResults" class="term-list hiddden"></ul>					
+										</div>
+										
+										<? } ?>	
+										<div id="new-int">				                
+					                	<div class="int"><span><?= $sm['config']['name']; ?></span></div>
+										<?  if($sm['profile']['id'] != $sm['user']['id']){
+												foreach ($sm['profile']['interest'] as $valor) {
+													echo '<div class="int"><span>'.$valor['name'].'</span></div>';
+												} 
+											} else {
+												if($sm['profile']['interest']){
+													foreach ($sm['profile']['interest'] as $valor) {
+														echo '<div class="int" data-interest="'.$valor['id'].'">
+															  <div class="delete_int" onclick="deleteInterest('."'".$valor['id']."'".')" >
+															   <i class="ion-close-round" style="color:#D52E46;font-size:10px;padding-left:3px"> </i>
+															  </div>
+															  <span>'.$valor['name'].'</span>
+															  </div>';
+													} 
+												}		
+											}
+										?>	
+										<div id="new-int"></div>     		                	
+					                </div>
+					            </div>
+					        </div>
+					        <div class="js-profile-personal-info-container">
+					            <div class="section section--profile">
+					                <h2 class="profile-h"><?= $sm['lang'][132]['text']; ?></h2>
+					                <div class="section-editable">
+					                    <div class="form">
+					                        <div class="form-row"><span class="profile-section__txt"><?= $sm['profile']['bio']; ?></span> </div>
+					                        <br>
+							                <?php
+							                  $arr = array();
+							                  $arr = profileQuestion($sm['user']['lang']);
+							                  foreach($arr as $entry){ $q = $entry['question']; ?>
+							                  <?php $a = userProfileAnswer($sm['profile']['id'],$entry['id']); ?>
+							                    <div class="form-row">
+					                            <div class="form-label b"><b><?= $entry['question'];?></b></div>
+					                            <div class="form-field"> 
+													<? if($a == ''){
+														echo '<span style="color:#999;">'.$sm['lang'][279]['text'].'</span>';
+													} else { 
+														echo $a;
+													}?> 
+					                            </div>
+					                            </div>				                            
+							                <?php } ?>					                        				                        					                        					                        
+					                    </div>
+					                </div>
+					            </div>
+					        </div>
+					        <div class="js-profile-languages-container">
+					            <div class="section section--profile">
+					                <h2 class="profile-h"><?= $sm['lang'][459]['text']; ?></h2>
+					                <div class="section-editable"> <?= getLangName($sm['profile']['lang']); ?></div>
+					            </div>
+					        </div>
+					    </section>
+					    <section class="profile-info-v2__right">
+					        <div class="js-profile-score-container">
+					            <div id="profile_score" class="profile-widget">
+					                <!-- -->
+					                <h2 class="profile-h"><?= $sm['lang'][460]['text']; ?></h2>
+					                <div class="score-user" style="height: 100px;">
+					                    <div class="inline">
+					                         <div class="safari chart" data-percent="<?= $sm['profile']['likes_percentage']; ?>"><div class="tag"></div></div>
+					                    </div>
+					                    <div class="inline score-user__txt montserrat" style="color:#666;font-size: 12px;margin-left: 95px;margin-top: 30px;">
+					                     <?= $sm['profile']['first_name']; ?><?= $sm['lang'][462]['text']; ?><b><?= $sm['profile']['total_likers']; ?></b><?= $sm['lang'][339]['text']; ?>
+					                     <b><?= $sm['profile']['totalLikes']; ?></b><?= $sm['lang'][461]['text']; ?>!</div>
+					                    <div class="btn-group btn-group--block score-user__btns"> </div>
+					                </div>
+					                <!-- -->
+					            </div>
+					        </div>
+					        <?php if($me){ ?>
+					        <div class="js-profile-gifts-container js-core-events-container">
+					            <div id="gifts" class="profile-widget js-wrap js-gifts-container hide">
+					                <h2 class="profile-h"><?= $sm['lang'][463]['text']; ?></h2>
+										<div class="profile-widget__items gifts-list">
+										    <div class="profile-widget__item gift gift--border gift--hover">
+										    	<img class="giftHover" src="//badoocdn.com/big/assets/gifts/thumb/web/standard/sz___size__/beer.png" 
+										    	data-src="<?=$sm['user']['profile_photo']; ?>" style="border-radius: 50%" width="60" height="60">
+										    </div>
+										</div>
+					            </div>
+					        </div>
+					        <?php } else { ?> 
+					        <div class="js-profile-gifts-container js-core-events-container">
+					            <div id="gifts" class="profile-widget js-wrap js-gifts-container hide">
+					                <h2 class="profile-h"><?= $sm['lang'][463]['text']; ?></h2>
+					                <div class="gift-add" style="cursor: pointer;" data-url="chat" data-uid="<?= $sm['profile']['id']; ?>">
+					                    <div class="inline gift gift--border">
+					                    	<img src="<?= $sm['config']['theme_url']; ?>/images/rose.png" width="60" height="60" alt="">
+					                    </div>
+					                    <b class="inline gift-add__txt montserrat" style="color:#666;font-size: 13px;top: 20px;">
+					                     Get <?= $sm['profile']['first_name']; ?><?= $sm['lang'][447]['text']; ?></b>
+					                </div>
+					            </div>
+					        </div>
+					        <?php } ?>
+					    </section>
+					</div>		
+				    <div class="footer-badoo" style="margin-bottom:25px;left:-4.15%;width:104%;">
+						<center>
+						<div class="ad-zone">
+							<?php echo siteConfig('ads'); ?>
+						</div>
+						<div class="download-apps">
+							<h3><?= $sm['lang'][392]['text']; ?>:</h3>
+							<a href="<?php echo $app_ios; ?>">
+								<img src="<?php echo $sm['config']['theme_url']; ?>/images/ios.png" />
+								<h2>Iphone <?= $sm['lang'][393]['text']; ?></h2>
+							</a>
+							<a href="<?php echo $app_android; ?>">
+								<img src="<?php echo $sm['config']['theme_url']; ?>/images/android.png" /><h2>Android <?= $sm['lang'][393]['text']; ?></h2>
+							</a>
+						</div>
+						<div class="bottom-left">
+							<a href="<?php echo $sm['config']['site_url']; ?>/terms"><h3><?= $sm['lang'][43]['text']; ?></h3></a> <a href="<?php echo $sm['config']['site_url']; ?>/privacy"><h3><?= $sm['lang'][45]['text']; ?></h3></a> <a href="mailto:<?php echo $sm['config']['email']; ?>"><h3><?= $sm['lang'][64]['text']; ?></h3></a> <h3>  <?php echo $sm['config']['name']; ?> 2017 </h3>
+						</div>			
+					</center>
+				  </div>															
+				</div>
+            </div>

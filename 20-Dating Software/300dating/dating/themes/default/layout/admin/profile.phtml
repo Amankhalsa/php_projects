@@ -1,0 +1,216 @@
+<?php
+global $mysqli;
+if(isset($_GET['u'])){
+  $id = secureEncode($_GET['u']);
+  $name = secureEncode($_GET['name']);
+  $sex = secureEncode($_GET['sex']);
+  $mysqli->query("UPDATE config_genders set name = '".$name."',sex = '".$sex."' where id = '".$id."'");
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=profile');
+}
+if(isset($_GET['a'])){
+  $id = secureEncode($_GET['a']);
+  $q = secureEncode($_GET['q']);
+  $t = secureEncode($_GET['t']);
+  $query = $mysqli->query("SELECT * FROM languages order by id ASC");
+  if ($query->num_rows > 0) { 
+    while($re = $query->fetch_object()){  
+        $mysqli->query("INSERT INTO config_profile_questions (id,question,lang_id,method) 
+          VALUES ('".$id."','".$q."','".$re->id."','".$t."')");
+    }
+  }
+
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=profile');
+}
+if(isset($_GET['d'])){
+  $id = secureEncode($_GET['d']);
+  $mysqli->query("DELETE FROM config_profile_questions where id = '".$id."'");
+  $mysqli->query("DELETE FROM config_profile_answers where qid = '".$id."'");
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=profile');
+}
+?>
+      <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+
+        <section class="content-header">
+
+          <h1>
+
+            Custom Profile Questions settings
+
+          </h1>
+
+        </section>
+
+		<script>aurl = 'profileQuestion';</script>
+
+        <!-- Main content -->
+
+        <section class="content">
+
+          <div class="row">
+
+            <div class="col-md-9">
+
+              <!-- general form elements -->
+
+              <div class="box box-primary">
+                <div class="box-header">
+
+                  <h3 class="box-title">Custom Profile Questions</h3>
+
+                </div><!-- /.box-header -->
+
+                <!-- form start -->
+
+                <form role="form" action="#" id="profile-questions-settings">
+
+				          <input type="hidden" value="profileQuestion" name="action" />				
+                  <div class="box-body">
+                  <table style="width: 100%;text-align: left;"><tr style="width: 100%;margin-bottom: 20px">
+                  <td style="display: inline-table;width: 10%"> ID</td>
+                  <td style="display: inline-table;width: 45%"> Question<br> Will be displayed in the site</td>
+                  <td style="display: inline-table;width: 30%"> Type<br>For the input, text or select</td></tr>
+                  </table>                                       
+                <?php
+                  $arr = array();
+                  $arr = profileQuestion(1);
+                  $all = end($arr);
+                  $all = $all['id'] + 1;
+                  foreach($arr as $entry){ $q = $entry['question']; ?>
+                      <div class="form-group">
+
+                             <input class="form-control" disabled style="display: inline-table;width: 10%" value="<?= $entry['id'];?>" />                        
+                             <input class="form-control"  id="profileQuestion<?= $entry['id'];?>" style="display: inline-table;width: 45%" value="<?= $entry['question'];?>" />
+                              <select class="form-control" id="profileType<?= $entry['id'];?>" style="display: inline-table;width: 20%">
+
+                                <?php if($entry['method'] == 'text'){
+                                  echo '<option value="text"  selected>Text</option>';
+                                  echo '<option value="select">Select</option>';
+                                } else {
+                                  echo '<option value="select" selected>Select</option>';
+                                   echo '<option value="text">Text</option>';
+                                } ?>
+                              </select> 
+                              <div style="display: inline-table;width: 20%">
+                              <a href="#" onClick="uQuestion(<?= $entry['id'];?>)" class="btn btn-success" style="display: inline-table;margin-right: 3px"><i class="fa fa-check"></i></a>                                
+                              <a href="#" onClick="dQuestion(<?= $entry['id'];?>)" class="btn btn-danger" style="display: inline-table;"><i class="fa fa-close"></i></a>
+                              <?php if($entry['method'] == 'select'){ ?>
+
+
+                              <?php } ?>                                   
+                              </div>                            
+                      </div>
+                  <?php } ?>	
+                     <div class="form-group">
+                             <input class="form-control" style="display: inline-table;width: 10%" value="<?= $all;?>" disabled name="site_profile_id" />                        
+                             <input class="form-control" id="profileQuestion" style="display: inline-table;width: 45%" value="" name="site_gender_name" />
+                              <select class="form-control" id="profileType" style="display: inline-table;width: 20%">
+                                  <option value="text">Text</option>
+                                  <option value="select">Select</option>
+                              </select> 
+                              <div style="display: inline-table;width: 20%">
+                              <a href="#" id="addQuestion" class="btn btn-success" style="display: inline-table;margin-right: 3px"><i class="fa fa-plus"></i></a>                                                                
+                              </div>                            
+                      </div>                  			
+                  </div><!-- /.box-body -->
+
+                </form>
+
+              </div><!-- /.box -->
+
+			</div>	
+    </div>
+        <section class="content-header" style="margin-bottom: 16px">
+          <center><h3>Possible answers for question type SELECT</h3></center>
+        </section>    
+    <div class="row">
+      <?php foreach($arr as $entry){ 
+        if($entry['method'] == 'select'){ 
+          $answer = array();
+          $answer = profileQuestionAnswer($entry['id'],1);
+          $c = count($answer);
+          $c = $c + 1;          
+          ?>
+        <div class="col-md-4">
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title"><?= $entry['question']; ?></h3>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-success" onclick="updateAnswers(<?= $entry['id']; ?>,<?= $c; ?>)">Update</button>
+              </div>              
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ol style="margin-left: 0;padding-left: 15px;">
+                <?php foreach($answer as $a){ ?>
+                  <li contenteditable="true" class="q-<?= $entry['id']; ?>" data-answer="<?= $a['id']; ?>" style="padding: 3px;font-size: 14px"><?= $a['answer']; ?></li>
+                <?php } ?>
+                <li contenteditable="true" class="q-<?= $entry['id']; ?>" data-answer="<?= $c; ?>" style="padding: 3px;font-size: 14px"></li>
+              </ol>
+            </div>
+             <div class="box-footer">
+              <p>Leave the answer empty for remove</p>
+             </div>
+          </div>
+          <!-- /.box -->
+        </div>
+      <?php } 
+      }?>	  
+
+
+		</div>	
+        <div class="callout" style="background:#ddd;margin:15px;">
+        <h4 style="padding: 25px;" class="warning">Everytime you update/add or remove a question/answer it will be updated in all the languages of the software,<br>however you can go to the 
+        <a href="index.php?page=admin&p=lang">language system</a> and edit it for each language</h4>
+        </div> 
+	</section>
+
+</div>	
+<script>
+function updateAnswers(val,c){
+  var question = val;
+  var answer;
+  var i = 0;
+  $('.q-'+val).each(function(entry) {
+    answerId = $(this).attr('data-answer');
+    answer = $(this).text();
+    console.log(answer);
+    i++;
+    $.ajax({
+      data: {
+        action: 'updateAnswer',  
+          qid: val,
+          answer: answer,
+          answerId: answerId
+         },    
+      url: request_source()+'/admin.php', 
+      type:  'post',    
+      success: function(response) { 
+        if(i == c){
+          window.location.reload();
+        }
+      }
+    });   
+  })     
+}
+
+
+document.getElementById("addQuestion").addEventListener("click", addQuestion);
+function addQuestion(){
+  var id = <?= $all; ?>;
+  var q = $('#profileQuestion').val();
+  var t = $('#profileType').val();
+  window.location.href = 'index.php?page=admin&p=profile&a='+id+'&q='+q+'&t='+t;
+}
+
+function uQuestion(id){
+  var q = $('#profileQuestion'+id).val();
+  var t = $('#profileType'+id).val();  
+  window.location.href = 'index.php?page=admin&p=profile&u='+id+'&q='+q+'&t='+t;
+}
+function dQuestion(id){
+  window.location.href = 'index.php?page=admin&p=profile&d='+id;
+}
+
+</script>

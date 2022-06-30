@@ -1,0 +1,67 @@
+<ion-view hide-nav-bar="true">
+  <ion-nav-title>
+    <div class="navigation-bar"   >
+        <div class="navigation-bar__primary">
+        </div>
+        <div class="navigation-bar__title">
+            <div class="navigation-bar__logo" style="z-index: 999;">
+              <img src="img/logo.png" />
+            </div>
+        </div>
+        <div class="navigation-bar__secondary"></div>
+    </div>
+  </ion-nav-title>
+<ion-content  scroll="false" ng-style="{height: iframeHeight + 'px'}" style="background: #fff">
+<div class="page landing visible"  style="z-index: 600;">
+    <div class="flexible-page">
+        <div class="page-content">
+            <div class="landing-decorations landing-decorations--badoo"></div>
+            <div class="landing-wrapper">
+                <div class="landing-logo" style="margin-top: -50px;">
+                    <div class="brick" style="width: 120px;" ng-click="pick()">
+                        <div class="brick__image" id="photo-upload" style="background-image: url('img/upload-icon.png')"></div>
+                    </div>                
+                </div>
+                <div class="landing-actions" style="margin-top: 80px">
+                    <div class="cta-box">
+                        <div class="cta-box__buttons">
+                        <ul class="list-view ">
+                          <li class="list-item-form">
+                            <label for="signin-name">{{alang[158].text}}</label>
+                            <input ng-model="user.reg_name" placeholder="{{lname}}" name="name" type="text" autocapitalize="off">
+                          </li>                        
+                          <li class="list-item-form">
+                            <label for="signin-name">{{alang[149].text}}</label>
+                            <input ng-model="user.reg_email" placeholder="{{lemail}}" name="email" type="email"  autocapitalize="off">
+                          </li>
+                          <li class="list-item-form" >
+                            <label for="signin-password">{{alang[150].text}}</label>
+                            <input type="password" id="regpass" ng-model="user.reg_pass" ng-keyup="count = $count + 1" ng-init="count=0" ng-minlength="4" required>
+                          </li>
+                               
+                        </ul>
+                        <div class="button-wrapper" style="margin-top: 25px">
+                            <div class="login-loader" style="margin-bottom: 40px;" ng-if="regBtn">
+                              <center><div class="loader02"></div></center>
+                            </div>                        
+                            <button class="button button--primary a" ng-class="{active: isActive}" ng-if="!regBtn" ng-click="next(user)">
+                            <div class="button__content"><span class="button__text">{{nexttext}}</span></div></button>
+                          
+
+                        </div>                        
+                    </div>
+                </div>
+                <div class="landing-footer">
+                  <span ng-click="goTo('home.welcome','left','')">{{alang[155].text}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <div flow-init
+       flow-name="uploader.flow"
+       flow-files-added="processFiles($files)">
+    <button flow-btn type="file" id="uploadRegPhoto" style="display: none;">Upload Images</button>
+   </div>  
+  </ion-content>
+</ion-view>

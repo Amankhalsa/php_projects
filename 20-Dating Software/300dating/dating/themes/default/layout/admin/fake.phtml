@@ -1,0 +1,49 @@
+       <script>aurl = 'fake';</script>	
+	  <div class="content-wrapper">
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Here you will see all the new messages to your currently ONLINE fake users!</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive">
+                  <table class="table table-hover" id="fake_list">
+                  </table>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix">
+                </div>
+              </div><!-- /.box -->
+            </div>
+          </div>
+	</section>
+</div>		
+<div class="cd-panel from-right" style="z-index:99999;">
+    <header class="cd-panel-header-ingame">
+        <h4 style="margin-left:25px;" id="nombre_edad"></h4>
+        <a href="#" onClick="close_chat();" class="cd-panel-close"><i class="fa fa-times" style="color:#111;"></i></a>
+    </header>     
+    <header class="cd-panel-footer-ingame">
+    <form action="#" method="post" id="chat">
+        <input type="hidden" id="uid1" name="uid1" value="" style="display:none">
+        <input type="hidden" id="uid2"  name="uid2" value="" style="display:none">
+        <input type="hidden" id="uid2_name"  name="uid2_name" value="" style="display:none">        
+        <input type="hidden" id="photo"  value="" style="display:none">
+        <input type="hidden" name="action"  value="send_fake" style="display:none">  		
+        <input type="text" placeholder="Write here to respond" id="mensaje" autocomplete="off"  name="mensaje" class="form-control"   style=" width:85%; border:none; font-size:14px;"/>
+
+        <div id="grabar_video_div">
+        <button  type="submit"  class="cd-panel-enviar"  style="font-size:14px;border:none;outline:none;"><i class="fa fa-send" style="color:#f36c11;"></i></a>
+        </div>
+        </form>		
+    </header>  
+    <div class="cd-panel-container-ingame"><!-- START CHAT WINDOW -->
+		<div class="cd-panel-content" id="chat-body" >			
+			<ul class="chats" id="lista_chat">
+                <center> <a href="#" class="datestamp" id="datestamp"> </a></center>       
+                <div id="chat_history"></div>
+                <div id="mensaje_nuevo"></div>                                                                                       
+			</ul>          
+        </div> 
+    </div> <!-- END CHAT WINDOW -->
+</div> <!-- END CHAT CONTENT -->

@@ -1,0 +1,62 @@
+<script>
+    url = "credits";
+</script>
+<div class="col s8 real fix-width-content" id="site-content">
+    <div class="wall" style="height:100%;">
+        <div class="payment-promo__head payment-promo__head--spp" style="width: 107.2%;left:-7.2%">
+            <div class="brick brick--xlg brick--stroke">
+                <div class="brick-img profile-photo" data-src="<?= $sm['user']['profile_photo']; ?>"></div>
+                <mark class="brick brick--sm brick--spp"><img src="<?= $sm['config']['theme_url']; ?>/images/vip_y.png" /> </mark>
+            </div>
+        </div>
+        <div class="payment-promo">
+            <div class="payment-promo__content">
+                <?php if($sm['user']['premium'] == 1){
+                    echo'<h2 class="montserrat" style="font-size: 22px;margin:0">Super Powers activated till <b>'.adminCheckDaysLeft($sm['user']['premium_check']).'</b></h2>'; 
+                }else{ ?>                
+                    <h2 class="montserrat" style="font-size: 22px;margin:0">Activate your Super Powers:</h2>
+                    <div class="payment-promo__buttons">
+                        <?= getPremiumPackages(); ?>                                               
+                    </div>
+                <?php } ?>
+                    <div class="payment-promo__features">
+                        <div class="major-features">
+                            <div class="major-features__item">
+                                <div class="major-features__figure major-features__figure--profile">
+                                    <div class="major-features__photo profile-photo" data-src="<?= randomPhotoUser($sm['user']['s_gender']); ?>"></div>
+                                </div> <span class="x-large"><?= $sm['lang'][493]['text']; ?> <b><?= $sm['lang'][494]['text']; ?></b> <?= $sm['lang'][495]['text']; ?>.</span> </div>
+                            <div class="major-features__item">
+                                <div class="major-features__figure major-features__figure--card">
+                                    <div class="major-features__photo profile-photo" data-src="<?= randomPhotoUser($sm['user']['s_gender']); ?>"></div>
+                                </div> <span class="x-large"><?= $sm['lang'][496]['text']; ?> <b><?= $sm['lang'][497]['text']; ?></b>.</span> </div>
+                            <div class="major-features__item">
+                                <div class="major-features__figure payment-info__ico--favorite">
+                                    <div class="major-features__photo profile-photo" data-src="<?= randomPhotoUser($sm['user']['s_gender']); ?>"></div>
+                                </div> <span class="x-large"><?= $sm['lang'][425]['text']; ?>.</span> </div>
+                        </div>
+                        <div class="minor-features">
+                            <div class="minor-features__item">
+                                <div class="minor-features__ico"><img src="<?= $sm['config']['theme_url'];?>/images/videocall-premium.png" /></div>
+                                <p>
+                                    <?= $sm['lang'][499]['text']; ?>.</p>
+                            </div>
+                            <div class="minor-features__item">
+                                <div class="minor-features__ico"> <img src="<?= $sm['config']['theme_url'];?>/images/message-first.png" /></div>
+                                <p>
+                                    <?= $sm['lang'][500]['text']; ?>.</p>
+                            </div>
+                            <div class="minor-features__item">
+                                <div class="minor-features__ico"><img src="<?= $sm['config']['theme_url'];?>/images/invisible.png" /></div>
+                                <p>
+                                    <?= $sm['lang'][501]['text']; ?>.</p>
+                            </div>
+                            <div class="minor-features__item">
+                                <div class="minor-features__ico"><img src="<?= $sm['config']['theme_url'];?>/images/chat-more.png" /> </div>
+                                <p>
+                                    <?= $sm['lang'][502]['text']; ?>.</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>

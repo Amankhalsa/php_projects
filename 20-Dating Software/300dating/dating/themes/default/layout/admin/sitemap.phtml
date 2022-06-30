@@ -1,0 +1,44 @@
+       <script>aurl = 'sitemap';</script>	
+
+	  <div class="content-wrapper">
+
+        <section class="content">
+          <div class="row">
+
+            <div class="col-xs-12">
+
+              <div class="box">
+
+                <div class="box-header">
+
+                  <h3 class="box-title">Sitemap generator for <?=$sm['config']['name']; ?></h3>
+
+                </div><!-- /.box-header -->
+
+                <div class="box-body table-responsive">
+
+                  <?php
+                    $url = $sm['config']['site_url'].'sitemap.php';
+                    $ch = curl_init($url);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    $result = curl_exec($ch);
+                    echo $result;
+                    curl_close($ch);
+                  ?>
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer clearfix">
+
+                </div>
+
+              </div><!-- /.box -->
+
+            </div>
+
+          </div>
+ 
+	</section>
+
+</div>		
+

@@ -1,0 +1,96 @@
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Prices settings
+          </h1>
+        </section>
+		<script>aurl = 'prices';</script>
+        <!-- Main content -->
+
+	<section class="content">
+          <div class="row">
+		  
+            <div class="col-md-4">
+              <!-- general form elements -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Credits Functions Price</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" action="#" id="price-settings">
+				<input type="hidden" value="prices" name="action" />						
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price in credits for unblock Private photos</label>
+					  <input class="form-control" value="<?= $sm['price']['private']; ?>" name="site_price_private" />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price in credits for add photo to the Spotlight</label>
+					  <input class="form-control" value="<?= $sm['price']['spotlight']; ?>" name="site_price_spotlight" />
+                    </div>	
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price in credits for buy <?= $sm['basic']['chat']; ?> more daily chat</label>
+					  <input class="form-control" value="<?= $sm['price']['chat']; ?>" name="site_price_chat" />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price in credits for buy boost profile</label>
+					  <input class="form-control" value="<?= $sm['price']['boost']; ?>" name="site_price_boost" />
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price in credits for buy get seen 100 times in discover</label>
+					  <input class="form-control" value="<?= $sm['price']['discover']; ?>" name="site_price_discover" />
+                    </div>	
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Price in credits for buy be first in meet section</label>
+					  <input class="form-control" value="<?= $sm['price']['first']; ?>" name="site_price_first" />
+                    </div>					
+                  </div><!-- /.box-body -->
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Update prices </button>
+                  </div>
+                </form>
+              </div><!-- /.box -->
+			</div>			  
+            <div class="col-md-4">
+              <!-- general form elements -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Buy Credits Price</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" action="#" id="credits-settings">
+				<input type="hidden" value="credits" name="action" />					
+                  <div class="box-body">
+					<?= getAdminCreditsPackages(); ?>
+                  </div><!-- /.box-body -->
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Update credits </button>
+                  </div>
+                </form>
+              </div><!-- /.box -->
+			</div>
+            <div class="col-md-4">
+              <!-- general form elements -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <h3 class="box-title">Premium Account Price</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" action="#" id="premium-settings">
+				<input type="hidden" value="premium" name="action" />
+                  <div class="box-body">
+					<?= getAdminPremiumPackages(); ?>
+                  </div><!-- /.box-body -->
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Update premium </button>
+                  </div>
+                </form>
+              </div><!-- /.box -->
+			</div>
+		
+		</div>			
+		</div>			
+	</section>
+</div>	

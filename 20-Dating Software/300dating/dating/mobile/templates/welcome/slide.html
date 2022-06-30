@@ -1,0 +1,27 @@
+<ion-view >
+  <div class="wrapper" fit vertical layout justified>
+    <ion-slide-box on-slide-changed="slideHasChanged($index)" active-slide="activeIndex" ng-init="activeIndex = 0" class="m-t">
+      <ion-slide class="text-center flex-vertical-center" ng-repeat="i in [1,2,3]">
+		<div class="text-center text-muted text-intro">
+			<span ng-show="i == 1">{{lang19}}</span>
+			<span ng-show="i == 2">{{lang20}}</span>
+			<span ng-show="i == 3">{{lang21}}</span>			
+		</div>	  
+        <img  ng-src="{{site_url}}app/img/intro_{{i}}.jpg" alt="">
+      <div class="text-center text-muted comforta">
+        <h3 class="comforta" ng-show="i == 1">{{slideTitleLang1}}</h3>
+        <span class="comforta" ng-show="i == 1">{{slideLang1}}</span>
+        <h3 class="comforta" ng-show="i == 2">{{slideTitleLang2}}</h3>
+        <span class="comforta" ng-show="i == 2">{{slideLang2}}</span>
+        <h3 class="comforta" ng-show="i == 3">{{slideTitleLang3}}</h3>
+        <span class="comforta" ng-show="i == 3">{{slideLang3}}</span>                
+      </div>        
+      </ion-slide>
+    </ion-slide-box>  
+
+    <div class="text-center text-muted comforta">
+		<span></span>
+		<button class="button button-block button-tinder comforta" style="background: #7000E3;color:#fff" ng-click="goTo('home.welcome','right','')" data-alid="23"></button>
+    </div>
+  </div>
+</ion-view>	

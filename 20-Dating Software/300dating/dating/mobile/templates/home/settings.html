@@ -1,0 +1,168 @@
+<ion-view>
+  <ion-nav-title>
+    <div class="navigation-bar">
+        <div class="navigation-bar__primary">
+            <div class="navigation-bar__icon js-goto" ng-click="goBack();">
+                <div class="icon" style="left: 0px;">
+                        <svg class="icon__content icon__content--inactive">
+<svg viewBox="0 0 64 64" id="navigation-bar-back" width="100%" height="100%"><path d="M12.05 33.28l13.83 13.83-1.81 1.81L7.4 32.25l.26-.26-.23-.24 16.6-16.67 1.82 1.81-13.78 13.83h44.25v2.56H12.05z"></path></svg>
+                    </svg>
+                </div>
+            </div>
+          </div>
+       <div class="navigation-bar__main" style="margin-top: -4px">
+            <div class="navigation-bar__logo">
+                <span class="comforta">{{alang[40].text}}</span>
+            </div>
+        </div>
+        <div class="navigation-bar__secondary">         
+        </div>
+    </div> 
+  
+</ion-nav-title>
+
+ <ion-content class="vivify fadeIn">
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c comforta">{{alang[84].text}}</div>
+      
+      <div class="item" horizontal layout center>
+        <div class="row no-padder">
+          <div class="col-40 comforta">
+            {{alang[85].text}}
+          </div>
+          <div class="col-60 text-right comforta">
+            <input style="border:none;float:right;" value="" google-autocomplete-suggestion location="data.location" on-selection="onAddressSelection(location)" ng-model="data.location" />
+          </div>
+        </div>
+        <span class="item-note m-l">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+
+      <div class="item b-t comforta">
+        {{alang[86].text}}
+        <span class="item-note comforta">
+      <div ng-if="distance < 30">{{alang[87].text}}</div>
+      <div ng-if="distance < 550 && distance > 500 ">{{alang[88].text}}</div>     
+      <div ng-if="distance > 30 && distance < 500 || distance > 550 && distance < 1000">{{distance}} km</div>     
+      <div ng-if="distance == 1000">{{alang[89].text}}</div>
+        </span>
+    
+        <div class="range range-positive comforta" ng-init="distance = 520">
+          <input type="range" name="distance" min="0" max="1000" value="distance" ng-model="distance" 
+             ng-model-options="{ updateOn: 'change' }"
+             ng-change="updateDistance(distance)" class="w-full">
+        </div>
+      </div>
+
+      <div class="item" ng-click="updateGender()" horizontal layout center>
+        <div class="row no-padder">
+          <div class="col-40 comforta">
+            {{alang[90].text}}
+          </div>
+          <div class="col-60 text-right comforta">
+             {{gender}}
+            <div class="text-xs text-muted"></div>
+          </div>
+        </div>
+        <span class="item-note m-l">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+      <div class="item b-t comforta">
+       {{alang[91].text}}
+
+       <div class="range range-positive comforta">
+          <div class="range-label">{{range.from}}</div>
+          <ui-multi-range ng-step="1" ng-min="ageMin" ng-max="ageMax" ng-model-min="range.from" ng-model-max="range.to" ng-change-min="updateAge(range.from,range.to)" ng-change-max="updateAge(range.from,range.to)"></ui-multi-range>
+          <div class="range-label">{{range.to}}</div>
+        </div>          
+      </div>
+      <div class="item item-toggle comforta">
+        {{alang[92].text}}
+        <label class="toggle toggle-assertive">
+      <input type="checkbox" ng-click="updateOnline()">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c comforta">{{alang[93].text}}</div>
+      <div class="item item-toggle comforta">
+        {{alang[94].text}}
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" ng-checked="matches" ng-model="matches"  ng-click="updateNotification('match_m',matches)">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="item item-toggle comforta">
+        {{alang[95].text}}
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" ng-checked="likes" ng-model="likes"  ng-click="updateNotification('fan',likes)">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+      <div class="item item-toggle comforta">
+        {{alang[96].text}}
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" ng-checked="messages" ng-model="messages"  ng-click="updateNotification('message',messages)">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+
+
+      <div class="item item-toggle comforta">
+        {{alang[97].text}}
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" ng-checked="visits" ng-model="visits"  ng-click="updateNotification('visit',visits)">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </div>
+
+    </div>
+
+
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item item-divider b-none text-u-c comforta">{{alang[98].text}}</div>  
+      <div class="item comforta" ng-click="openPrivacy()">
+        {{alang[100].text}}
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+
+      <div class="item comforta"  ng-click="openTerms()">
+        {{alang[101].text}}
+        <span class="item-note">
+          <i class="icon ion-chevron-right"></i>
+        </span>
+      </div>
+
+    </div>
+  
+  <!--
+    <div class="list m-n">
+      <div class="item item-divider b-none"></div>
+      <div class="item" ng-click="deleteProfile()" style="text-align:center;color:#ff4f38">
+        {{lang[150].text}}
+      </div>    
+
+    </div>
+  -->
+    </div>
+  </ion-content> 
+</ion-view>
